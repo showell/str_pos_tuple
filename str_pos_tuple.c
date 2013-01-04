@@ -2,6 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef void (*STR_FUNC)(void *data, char *s);
+
+struct callback {
+    STR_FUNC f;
+    void *data;
+};
+#define CALL(pcb, s) ((pcb->f)(pcb->data, s))
+
 struct pos_str_tuple {
     unsigned int pos;
     char *s;
@@ -97,18 +105,27 @@ void dump_str_positions(
     free(ppst);
 }
 
+void test_add_strings(struct callback *pcb) {
+    int i = 0;
+
+    CALL(pcb, "foo");
+    for (i = 0; i < 40; ++i) {
+        CALL(pcb, "bar");
+    }
+    CALL(pcb, "yo");
+    CALL(pcb, "foo");
+}
 
 void test(doc_id) {
     struct tuple_array sa;
-    int i = 0;
 
     tuple_array_init(&sa);
-    tuple_array_add(&sa, "foo");
-    for (i = 0; i < 40; ++i) {
-        tuple_array_add(&sa, "bar");
-    }
-    tuple_array_add(&sa, "yo");
-    tuple_array_add(&sa, "foo");
+    struct callback cb;
+    cb.f = (STR_FUNC)tuple_array_add;
+    cb.data = &sa;
+
+    test_add_strings(&cb);
+    printf("\n\n");
 
     dump_str_positions(&sa, doc_id);
     tuple_array_release(&sa);
