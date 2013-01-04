@@ -16,9 +16,9 @@ struct pos_str_tuple {
 };
 
 struct tuple_array {
-    int cnt;
-    int size;
-    int pos;
+    unsigned int cnt;
+    unsigned int size;
+    unsigned int pos;
     struct pos_str_tuple *array;
 };
 
@@ -30,7 +30,7 @@ void tuple_array_init(struct tuple_array *pta) {
 }
 
 void tuple_array_release(struct tuple_array *pta) {
-    int i;
+    unsigned int i;
 
     for (i = 0; i < pta->cnt; ++i) {
         free(pta->array[i].s);
@@ -73,9 +73,9 @@ void dump_str_positions(
     struct tuple_array *pta,
     int doc_id
 ) {
-    int i;
-    int cnt = pta->cnt;
-    int width = sizeof(struct pos_str_tuple);
+    unsigned int i;
+    unsigned int cnt = pta->cnt;
+    unsigned int width = sizeof(struct pos_str_tuple);
 
     if (!cnt) return;
 
@@ -104,7 +104,7 @@ void dump_str_positions(
 }
 
 void test_add_strings(struct callback *pcb) {
-    int i = 0;
+    unsigned int i = 0;
 
     CALL(pcb, "foo");
     for (i = 0; i < 40; ++i) {
@@ -130,7 +130,7 @@ void test(doc_id) {
 }
 
 int main(int argc, char **argv) {
-    int i;
+    unsigned int i;
 
     for (i = 0; i < 1000; ++i) {
         test(i);
