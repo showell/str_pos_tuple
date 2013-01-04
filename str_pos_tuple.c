@@ -62,7 +62,8 @@ int tuple_str_compare(const void *v1, const void *v2) {
 }
 
 void dump_str_positions(
-    struct tuple_array *pta
+    struct tuple_array *pta,
+    int doc_id
 ) {
     int i;
     int cnt = pta->cnt;
@@ -82,12 +83,12 @@ void dump_str_positions(
     );
 
     char *curr_s = ppst[0].s;
-    printf("%s", curr_s);
+    printf("%s %d", curr_s, doc_id);
 
     for (i = 0; i < cnt; ++i) {
         if (strcmp(curr_s, ppst[i].s)) {
             curr_s = ppst[i].s;
-            printf("\n%s", curr_s);
+            printf("\n%s %d", curr_s, doc_id);
         }
         printf(" %d", ppst[i].pos);
     }
@@ -97,7 +98,7 @@ void dump_str_positions(
 }
 
 
-void test() {
+void test(doc_id) {
     struct tuple_array sa;
     int i = 0;
 
@@ -109,7 +110,7 @@ void test() {
     tuple_array_add(&sa, "yo");
     tuple_array_add(&sa, "foo");
 
-    dump_str_positions(&sa);
+    dump_str_positions(&sa, doc_id);
     tuple_array_release(&sa);
 }
 
@@ -117,6 +118,6 @@ int main(int argc, char **argv) {
     int i;
 
     for (i = 0; i < 1000; ++i) {
-        test();
+        test(i);
     }
 }
