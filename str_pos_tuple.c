@@ -97,7 +97,7 @@ void dump_str_positions(
 }
 
 
-int main(int argc, char **argv) {
+void test() {
     struct tuple_array sa;
     int i = 0;
 
@@ -111,4 +111,12 @@ int main(int argc, char **argv) {
 
     dump_str_positions(&sa);
     tuple_array_release(&sa);
+}
+
+int main(int argc, char **argv) {
+    int i;
+
+    for (i = 0; i < 1000; ++i) {
+        test();
+    }
 }
