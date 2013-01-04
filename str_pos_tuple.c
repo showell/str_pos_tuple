@@ -76,11 +76,11 @@ void dump_str_positions(
     int i;
     int cnt = pta->cnt;
     int width = sizeof(struct pos_str_tuple);
-    struct pos_str_tuple *ppst;
 
     if (!cnt) return;
 
-    ppst = malloc(cnt * width);
+    struct pos_str_tuple ppst[cnt];
+
     memcpy(ppst, pta->array, cnt * width);
 
     qsort(
@@ -101,8 +101,6 @@ void dump_str_positions(
         printf(" %d", ppst[i].pos);
     }
     printf("\n");
-
-    free(ppst);
 }
 
 void test_add_strings(struct callback *pcb) {
