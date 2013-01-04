@@ -117,18 +117,18 @@ void test_add_strings(struct callback *pcb) {
 }
 
 void test(doc_id) {
-    struct tuple_array sa;
+    struct tuple_array ta;
 
-    tuple_array_init(&sa);
+    tuple_array_init(&ta);
     struct callback cb;
     cb.f = (STR_FUNC)tuple_array_add;
-    cb.data = &sa;
+    cb.data = &ta;
 
     test_add_strings(&cb);
     printf("\n\n");
 
-    dump_str_positions(&sa, doc_id);
-    tuple_array_release(&sa);
+    dump_str_positions(&ta, doc_id);
+    tuple_array_release(&ta);
 }
 
 int main(int argc, char **argv) {
