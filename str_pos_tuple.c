@@ -114,7 +114,7 @@ void test_add_strings(struct callback *pcb) {
     CALL(pcb, "foo");
 }
 
-void test(doc_id) {
+void test(unsigned int doc_id) {
     struct tuple_array ta;
 
     tuple_array_init(&ta);
